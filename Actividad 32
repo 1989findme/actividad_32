@@ -1,0 +1,72 @@
+0)
+sudo su postgres
+psql
+1) CREATE DATABASE Pintagram
+2)\c pintagram;
+3)CREATE TABLE users (id serial primary key, name VARCHAR(50)) ;
+4)CREATE TABLE images(id serial primary key, name VARCHAR(50), users_id integer REFERENCES users(id));
+5)CREATE TABLE likes ( users_id integer REFERENCES users(id), images_id integer REFERENCES images(id), unique(users_id, images_id));
+6)CREATE TABLE tags(id serial primary key, tag VARCHAR(50));
+7)CREATE TABLE tagged_images( tags_id integer REFERENCES tags(id), images_id integer REFERENCES images(id), unique(tags_id, images_id));
+8)
+Insert INTO users(name) values ('Emanuel');
+Insert INTO users(name) values ('Marisol');
+9)
+INSERT INTO images(name, users_id) values ('281022.jpg', 1);
+INSERT INTO images(name, users_id) values ('23121989.jpg', 1);
+INSERT INTO images(name, users_id) values ('42421389.jpg', 2);
+INSERT INTO images(name, users_id) values ('12123132.jpg', 2);
+10)
+INSERT INTO likes(users_id, images_id) values ( 1, 1);
+INSERT INTO likes(users_id, images_id) values ( 1, 3);
+INSERT INTO likes(users_id, images_id) values ( 1, 4);
+INSERT INTO likes(users_id, images_id) values ( 2, 2);
+INSERT INTO likes(users_id, images_id) values ( 2, 3);
+INSERT INTO likes(users_id, images_id) values ( 2, 4);
+11)
+INSERT INTO tags(tag) values ('feliz');
+INSERT INTO tags(tag) values ('Triste');
+INSERT INTO tags(tag) values ('Playa');
+INSERT INTO tags(tag) values ('Santiasco');
+INSERT INTO tags(tag) values ('Sad');
+INSERT INTO tags(tag) values ('Sol');
+INSERT INTO tags(tag) values ('Soledad');
+INSERT INTO tags(tag) values ('Friends');
+12)
+INSERT INTO tagged_images(tags_id ,images_id) values (1 , 1 );
+INSERT INTO tagged_images(tags_id ,images_id) values (3 , 1 );
+INSERT INTO tagged_images(tags_id ,images_id) values (6 , 1 );
+INSERT INTO tagged_images(tags_id ,images_id) values (2 , 2 );
+INSERT INTO tagged_images(tags_id ,images_id) values (4 , 2 );
+INSERT INTO tagged_images(tags_id ,images_id) values (5 , 2 );
+INSERT INTO tagged_images(tags_id ,images_id) values (7 , 3 );
+INSERT INTO tagged_images(tags_id ,images_id) values (5 , 3 );
+INSERT INTO tagged_images(tags_id ,images_id) values (4 , 3 );
+INSERT INTO tagged_images(tags_id ,images_id) values (8 , 4 );
+INSERT INTO tagged_images(tags_id ,images_id) values (1 , 4 );
+INSERT INTO tagged_images(tags_id ,images_id) values (4 , 4 );
+13)
+SELECT name, count (*) from likes, images where images.id = likes.users_id group by images.id;
+14)
+SELECT name, count (*) from images, users where users.id = images.users_id group by users.id;
+15)
+SELECT tag, count (*) from tagged_images, tags where tags.id = tagged_images.tags_id group by tags.id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
